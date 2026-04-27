@@ -1,4 +1,5 @@
 package com.apps.quantitymeasurement;
+import com.apps.quantitymeasurement.LengthUnit;
 
 public class QuantityMeasurementApp {
 
@@ -8,8 +9,8 @@ public class QuantityMeasurementApp {
     }
 
     // Method with parameters
-    public static void demonstrateLengthComparison(double value1, Length.LengthUnit unit1,
-                                                   double value2, Length.LengthUnit unit2) {
+    public static void demonstrateLengthComparison(double value1, LengthUnit unit1,
+                                                   double value2, LengthUnit unit2) {
 
         Length l1 = new Length(value1, unit1);
         Length l2 = new Length(value2, unit2);
@@ -20,15 +21,15 @@ public class QuantityMeasurementApp {
     }
 
     public static Length demonstrateLengthConversion(double value,
-                                                     Length.LengthUnit fromUnit,
-                                                     Length.LengthUnit toUnit) {
+                                                     LengthUnit fromUnit,
+                                                     LengthUnit toUnit) {
 
         double result = Length.convert(value, fromUnit, toUnit);
         return new Length(result, toUnit);
     }
 
     public static Length demonstrateLengthConversion(Length length,
-                                                     Length.LengthUnit toUnit) {
+                                                     LengthUnit toUnit) {
 
         return length.convertTo(toUnit);
     }
@@ -40,7 +41,7 @@ public class QuantityMeasurementApp {
     public static Length demonstrateLengthAddition(
             Length length1,
             Length length2,
-            Length.LengthUnit targetUnit) {
+            LengthUnit targetUnit) {
 
         if (length1 == null || length2 == null || targetUnit == null) {
             throw new IllegalArgumentException("Invalid input");
@@ -52,28 +53,28 @@ public class QuantityMeasurementApp {
     public static void main(String[] args) {
 
         Length result1 = demonstrateLengthConversion(1.0,
-                Length.LengthUnit.FEET,
-                Length.LengthUnit.INCHES);
+                LengthUnit.FEET,
+                LengthUnit.INCHES);
 
         System.out.println("1 ft = " + result1);
 
-        Length length = new Length(2.0, Length.LengthUnit.YARDS);
+        Length length = new Length(2.0, LengthUnit.YARDS);
         Length result2 = demonstrateLengthConversion(length,
-                Length.LengthUnit.INCHES);
+                LengthUnit.INCHES);
 
         System.out.println("2 yards = " + result2);
-        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+        Length l1 = new Length(1.0, LengthUnit.FEET);
+        Length l2 = new Length(12.0, LengthUnit.INCHES);
 
         // UC7: Addition with explicit target unit
 
-        Length resultInFeet = demonstrateLengthAddition(l1, l2, Length.LengthUnit.FEET);
+        Length resultInFeet = demonstrateLengthAddition(l1, l2, LengthUnit.FEET);
         System.out.println("Result in FEET: " + resultInFeet);
 
-        Length resultInInches = demonstrateLengthAddition(l1, l2, Length.LengthUnit.INCHES);
+        Length resultInInches = demonstrateLengthAddition(l1, l2, LengthUnit.INCHES);
         System.out.println("Result in INCHES: " + resultInInches);
 
-        Length resultInYards = demonstrateLengthAddition(l1, l2, Length.LengthUnit.YARDS);
+        Length resultInYards = demonstrateLengthAddition(l1, l2, LengthUnit.YARDS);
         System.out.println("Result in YARDS: " + resultInYards);
     }
 }
