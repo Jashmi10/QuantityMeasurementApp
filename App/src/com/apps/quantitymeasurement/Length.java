@@ -95,28 +95,73 @@ public class Length {
         return Math.round(result * 100.0) / 100.0;
     }
 
-    // UC6: Add two lengths
+    /**
+     * UC6: Add and return in unit of first operand
+     */
     public Length add(Length thatLength) {
-
         if (thatLength == null) {
-            throw new IllegalArgumentException("Cannot add null length");
+            throw new IllegalArgumentException("Length cannot be null");
         }
 
+        return addAndConvert(thatLength, this.unit); // reuse UC7 logic
+    }
+
+    /**
+     * Demonstrate addition with target unit (UC7)
+     */
+    public static Length demonstrateLengthAddition(
+            Length length1,
+            Length length2,
+            Length.LengthUnit targetUnit) {
+
+        if (length1 == null || length2 == null || targetUnit == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        return length1.add(length2, targetUnit);
+    }
+
+    /**
+     * UC7: Add another length and return result in specified target unit.
+     *
+     * @param thatLength the length to add
+     * @param targetUnit the unit in which result should be returned
+     * @return new Length representing sum in target unit
+     */
+    public Length add(Length thatLength, LengthUnit targetUnit) {
+        if (thatLength == null || targetUnit == null) {
+            throw new IllegalArgumentException("Length or target unit cannot be null");
+        }
+
+        if (!Double.isFinite(this.value) || !Double.isFinite(thatLength.value)) {
+            throw new IllegalArgumentException("Invalid numeric value");
+        }
+
+        return addAndConvert(thatLength, targetUnit);
+    }
+
+    private double convertFromBaseToTargetUnit(double baseValue, LengthUnit targetUnit) {
+        double result = baseValue / targetUnit.getConversionFactor();
+        return Math.round(result * 100.0) / 100.0;
+    }
+
+    /**
+     * Internal helper for addition + conversion (used by UC6 and UC7)
+     */
+    private Length addAndConvert(Length thatLength, LengthUnit targetUnit) {
         // Convert both to base unit (inches)
         double base1 = this.convertToBaseUnit();
         double base2 = thatLength.convertToBaseUnit();
 
         // Add
-        double sumBase = base1 + base2;
+        double sumInBase = base1 + base2;
 
-        // Convert back to unit of FIRST operand
-        double result = sumBase / this.unit.getConversionFactor();
+        // Convert to target unit
+        double resultValue = convertFromBaseToTargetUnit(sumInBase, targetUnit);
 
-        // Round
-        result = Math.round(result * 100.0) / 100.0;
-
-        return new Length(result, this.unit);
+        return new Length(resultValue, targetUnit);
     }
+
 
     // 🔹 Test main
     public static void main(String[] args) {
