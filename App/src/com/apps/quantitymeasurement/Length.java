@@ -95,6 +95,29 @@ public class Length {
         return Math.round(result * 100.0) / 100.0;
     }
 
+    // UC6: Add two lengths
+    public Length add(Length thatLength) {
+
+        if (thatLength == null) {
+            throw new IllegalArgumentException("Cannot add null length");
+        }
+
+        // Convert both to base unit (inches)
+        double base1 = this.convertToBaseUnit();
+        double base2 = thatLength.convertToBaseUnit();
+
+        // Add
+        double sumBase = base1 + base2;
+
+        // Convert back to unit of FIRST operand
+        double result = sumBase / this.unit.getConversionFactor();
+
+        // Round
+        result = Math.round(result * 100.0) / 100.0;
+
+        return new Length(result, this.unit);
+    }
+
     // 🔹 Test main
     public static void main(String[] args) {
 
