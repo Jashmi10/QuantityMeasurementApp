@@ -101,4 +101,16 @@ public class QuantityMeasurementAppTest {
 
         assertEquals(1.0, result, 0.01); // epsilon
     }
+
+    @Test
+    public void testAddition_FeetPlusInches() {
+        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
+        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+
+        Length result = l1.add(l2);
+
+        Length expected = new Length(2.0, Length.LengthUnit.FEET);
+
+        assertTrue(result.equals(expected));
+    }
 }

@@ -33,6 +33,11 @@ public class QuantityMeasurementApp {
         return length.convertTo(toUnit);
     }
 
+    // UC6: Demonstrate addition
+    public static Length demonstrateLengthAddition(Length length1, Length length2) {
+        return length1.add(length2);
+    }
+
     public static void main(String[] args) {
 
         Length result1 = demonstrateLengthConversion(1.0,
@@ -46,5 +51,11 @@ public class QuantityMeasurementApp {
                 Length.LengthUnit.INCHES);
 
         System.out.println("2 yards = " + result2);
+        Length l1 = new Length(1.0, Length.LengthUnit.FEET);
+        Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
+
+        Length result = demonstrateLengthAddition(l1, l2);
+
+        System.out.println("Result: " + result); // 2.0 FEET
     }
 }
