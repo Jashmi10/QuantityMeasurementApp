@@ -57,6 +57,43 @@ public class Length {
 
         return this.compare(other);
     }
+    // Convert this length to another unit
+    public Length convertTo(LengthUnit targetUnit) {
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        // Step 1: Convert current value to base unit (inches)
+        double baseValue = this.convertToBaseUnit();
+
+        // Step 2: Convert base unit to target unit
+        double convertedValue = baseValue / targetUnit.getConversionFactor();
+
+        // Optional: round to 2 decimal places
+        convertedValue = Math.round(convertedValue * 100.0) / 100.0;
+
+        return new Length(convertedValue, targetUnit);
+    }
+
+    public static double convert(double value, LengthUnit source, LengthUnit target) {
+
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Invalid value");
+        }
+
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Units cannot be null");
+        }
+
+        // Convert to base unit (inches)
+        double baseValue = value * source.getConversionFactor();
+
+        // Convert to target unit
+        double result = baseValue / target.getConversionFactor();
+
+        return Math.round(result * 100.0) / 100.0;
+    }
 
     // 🔹 Test main
     public static void main(String[] args) {

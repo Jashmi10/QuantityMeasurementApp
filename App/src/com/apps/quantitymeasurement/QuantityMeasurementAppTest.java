@@ -74,4 +74,31 @@ public class QuantityMeasurementAppTest {
         assertTrue(feet.equals(inch));
         assertTrue(yard.equals(inch));
     }
+
+    @Test
+    public void testConversion_FeetToInches() {
+        double result = Length.convert(1.0,
+                Length.LengthUnit.FEET,
+                Length.LengthUnit.INCHES);
+
+        assertEquals(12.0, result);
+    }
+
+    @Test
+    public void testConversion_YardsToInches() {
+        double result = Length.convert(1.0,
+                Length.LengthUnit.YARDS,
+                Length.LengthUnit.INCHES);
+
+        assertEquals(36.0, result);
+    }
+
+    @Test
+    public void testConversion_CmToInches() {
+        double result = Length.convert(2.54,
+                Length.LengthUnit.CENTIMETERS,
+                Length.LengthUnit.INCHES);
+
+        assertEquals(1.0, result, 0.01); // epsilon
+    }
 }
