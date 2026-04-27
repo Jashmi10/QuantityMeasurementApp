@@ -51,4 +51,27 @@ public class QuantityMeasurementAppTest {
         Length l = new Length(1.0, Length.LengthUnit.FEET);
         assertFalse(l.equals(null));
     }
+
+    @Test
+    public void testYardToFeet() {
+        assertTrue(new Length(1.0, Length.LengthUnit.YARDS)
+                .equals(new Length(3.0, Length.LengthUnit.FEET)));
+    }
+
+    @Test
+    public void testCmToInch() {
+        assertTrue(new Length(1.0, Length.LengthUnit.CENTIMETERS)
+                .equals(new Length(0.393701, Length.LengthUnit.INCHES)));
+    }
+
+    @Test
+    public void testAllUnitsTransitive() {
+        Length yard = new Length(1.0, Length.LengthUnit.YARDS);
+        Length feet = new Length(3.0, Length.LengthUnit.FEET);
+        Length inch = new Length(36.0, Length.LengthUnit.INCHES);
+
+        assertTrue(yard.equals(feet));
+        assertTrue(feet.equals(inch));
+        assertTrue(yard.equals(inch));
+    }
 }
