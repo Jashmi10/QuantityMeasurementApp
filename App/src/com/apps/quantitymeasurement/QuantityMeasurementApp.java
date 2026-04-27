@@ -34,8 +34,19 @@ public class QuantityMeasurementApp {
     }
 
     // UC6: Demonstrate addition
-    public static Length demonstrateLengthAddition(Length length1, Length length2) {
-        return length1.add(length2);
+    /**
+     * Demonstrate addition with target unit (UC7)
+     */
+    public static Length demonstrateLengthAddition(
+            Length length1,
+            Length length2,
+            Length.LengthUnit targetUnit) {
+
+        if (length1 == null || length2 == null || targetUnit == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        return length1.add(length2, targetUnit);
     }
 
     public static void main(String[] args) {
@@ -54,8 +65,15 @@ public class QuantityMeasurementApp {
         Length l1 = new Length(1.0, Length.LengthUnit.FEET);
         Length l2 = new Length(12.0, Length.LengthUnit.INCHES);
 
-        Length result = demonstrateLengthAddition(l1, l2);
+        // UC7: Addition with explicit target unit
 
-        System.out.println("Result: " + result); // 2.0 FEET
+        Length resultInFeet = demonstrateLengthAddition(l1, l2, Length.LengthUnit.FEET);
+        System.out.println("Result in FEET: " + resultInFeet);
+
+        Length resultInInches = demonstrateLengthAddition(l1, l2, Length.LengthUnit.INCHES);
+        System.out.println("Result in INCHES: " + resultInInches);
+
+        Length resultInYards = demonstrateLengthAddition(l1, l2, Length.LengthUnit.YARDS);
+        System.out.println("Result in YARDS: " + resultInYards);
     }
 }
